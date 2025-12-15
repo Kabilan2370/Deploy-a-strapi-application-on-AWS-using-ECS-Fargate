@@ -1,4 +1,4 @@
 output "cluster_name" {
-  value = aws_ecs_cluster.strapi.name
+  value = aws_ecs_cluster.cluster.name
 }
 
