@@ -38,7 +38,7 @@ Terraform (Create AWS EC2 infrastructure)
 
 Default VPC (Networking)
 
-### Whenever you push code to GitHub, a new Strapi Docker image will be built → uploaded → and deployed to an EC2 server using Terraform.
+### Whenever you push code to GitHub, a new Strapi Docker image will be built → uploaded → and deployed to an EC2 server using Terraform
 
 ## Using .github/workflows create the resources by terraform --> do any changes on your repo  -->  When trigger the terraform.yml manually mentione the builded decker image tag then automatically pull that image from ECR then it will create a docker 
     
