@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: eu-noth-1
+  AWS_REGION: eu-north-1
   ECR_REPO: docker-strapi
   TF_DIR: terraform
 
