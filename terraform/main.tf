@@ -53,25 +53,54 @@ data "aws_security_groups" "strapi_sg" {
     values = ["default"]
   }
 }
+resource "aws_cloudwatch_log_group" "strapi" {
+  name              = "/ecs/strapi"
+  retention_in_days = 7
+}
 
 resource "aws_ecs_task_definition" "strapi" {
   family                   		= "docker-strapi-task"
-  requires_compatibilities 	= ["FARGATE"]
-  network_mode             	= "awsvpc"
+  requires_compatibilities 	  = ["FARGATE"]
+  network_mode             	  = "awsvpc"
   cpu                      		= 512
   memory                   		= 1024
-  execution_role_arn       	= aws_iam_role.ecs_task_execution.arn
+  execution_role_arn       	  = aws_iam_role.ecs_task_execution.arn
 
   container_definitions = jsonencode([
-    {
-      name  		= "docker-strapi"
-      image 		= var.image_uri
-      portMappings = [
-        {
-          containerPort = 1337
-        }
-      ]
-      essential = true
+  {
+    name      = "docker-strapi"
+    image     = var.image_uri
+    essential = true
+
+    portMappings = [
+      { containerPort = 1337 }
+    ]
+
+    environment = [
+      { name = "NODE_ENV", value = "production" },
+
+      { name = "DATABASE_CLIENT", value = "postgres" },
+      { name = "DATABASE_HOST", value = aws_db_instance.strapi.address },
+      { name = "DATABASE_PORT", value = "5432" },
+      { name = "DATABASE_NAME", value = "strapi" },
+      { name = "DATABASE_USERNAME", value = "strapi" },
+      { name = "DATABASE_PASSWORD", value = "StrapiPassword123!" },
+
+      { name = "APP_KEYS", value = "key1,key2,key3,key4" },
+      { name = "API_TOKEN_SALT", value = "randomTokenSalt" },
+      { name = "ADMIN_JWT_SECRET", value = "adminJwtSecret" },
+      { name = "JWT_SECRET", value = "jwtSecret" }
+    ]
+
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = "/ecs/strapi"
+        awslogs-region        = "eu-north-1"
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+
     }
   ])
 }
