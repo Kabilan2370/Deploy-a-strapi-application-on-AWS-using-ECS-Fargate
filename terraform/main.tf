@@ -106,7 +106,6 @@ resource "aws_ecs_task_definition" "strapi" {
     logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-group         = "/ecs/strapi"
         awslogs-region        = "eu-north-1"
         awslogs-stream-prefix = "ecs"
       }
