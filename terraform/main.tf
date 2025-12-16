@@ -24,7 +24,7 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resource "aws_iam_role" "ecs_task_execution" {
-  name = "docker-ecsTaskExecutionRole"
+  # name = "docker-ecsTaskExecutionRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -77,7 +77,7 @@ resource "aws_ecs_task_definition" "strapi" {
 }
 
 resource "aws_ecs_service" "strapi" {
-  # name            	= "docker-strapi-service"
+  name            	= "docker-strapi-service"
   cluster         	= aws_ecs_cluster.cluster.id
   task_definition 	= aws_ecs_task_definition.strapi.arn
   desired_count   	= 1
