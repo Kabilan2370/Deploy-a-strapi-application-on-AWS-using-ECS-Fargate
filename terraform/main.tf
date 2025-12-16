@@ -110,6 +110,9 @@ resource "aws_ecs_task_definition" "strapi" {
       { name = "DATABASE_USERNAME", value = "strapi" },
       { name = "DATABASE_PASSWORD", value = "StrapiPassword123!" },
 
+      { name = "DATABASE_SSL", value = "true" },
+      { name = "DATABASE_SSL_REJECT_UNAUTHORIZED", value = "false" },
+
       { name = "APP_KEYS", value = "r9pQ7fC0y6nYvP1H0M8z2KZ+FZt9JqYpR8aM1s3EwQ4=,m3L2V7N+Kx0T9fQWJ5p8E4rZPZCq+S6A1yH0MdnYv8=,FZ+P9Jq3sM0yQ7r8aK6L1Tz4VnH2E5CwWmRZx=,xZ9E1r2V7p8C6Wq0mM5QJH3N4Y+LZsAFTk=" },
       { name = "API_TOKEN_SALT", value = "S8Z3xH0QJ7r2p9C6yF5M+K4TnE1A=" },
       { name = "ADMIN_JWT_SECRET", value = "Z1x8K9yH3pQF7J0+E2C4rV6mN5A=" },
