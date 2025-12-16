@@ -103,14 +103,6 @@ resource "aws_ecs_task_definition" "strapi" {
       { name = "JWT_SECRET", value = "H5N6M8JZ9QF0y+K7pE3x1rC4V2A=" }
     ]
 
-    logConfiguration = {
-      logDriver = "awslogs"
-      options = {
-        awslogs-region        = "eu-north-1"
-        awslogs-stream-prefix = "ecs"
-      }
-    }
-
     }
   ])
 }
