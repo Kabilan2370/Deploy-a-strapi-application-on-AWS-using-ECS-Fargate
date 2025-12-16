@@ -106,7 +106,7 @@ resource "aws_ecs_task_definition" "strapi" {
 }
 
 resource "aws_ecs_service" "strapi" {
-  name            	= "docker-strapi-service"
+  name            	= "docker-ecs-strapi-service"
   cluster         	= aws_ecs_cluster.cluster.id
   task_definition 	= aws_ecs_task_definition.strapi.arn
   desired_count   	= 1
