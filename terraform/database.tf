@@ -18,6 +18,6 @@ resource "aws_db_instance" "strapi" {
   publicly_accessible     = true
   skip_final_snapshot     = true
 
-  vpc_security_group_ids  = data.aws_security_groups.strapi_sg.ids
-  db_subnet_group_name    = aws_db_subnet_group.sub_strapi.name
+  vpc_security_group_ids  = [aws_security_group.strapi_sg.id] 
+
 }
