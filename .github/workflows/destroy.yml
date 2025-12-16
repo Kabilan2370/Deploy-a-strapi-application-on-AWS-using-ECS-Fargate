@@ -33,4 +33,4 @@ jobs:
 
     - name: Terraform Destroy
       working-directory: ${{ env.TF_DIR }}
-      run: terraform destroy -auto-approve
+      run: terraform destroy -auto-approve -var="image_uri=dummy"
