@@ -4,5 +4,7 @@ variable "aws_region" {
 
 variable "image_uri" {
   description = "ECR image URI with tag"
+  type        = string
+  default     = ""
 }
 
