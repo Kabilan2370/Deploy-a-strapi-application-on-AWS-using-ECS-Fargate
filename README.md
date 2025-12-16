@@ -16,14 +16,12 @@
     │
     ├── .github/
     │   └── workflows/
-    │       ├── ci.yml          # CI: Build & push Docker image workflow
-    │       └── terraform.yml   # CD: Manual Terraform apply
+    │       └── terraform.yml   CI: Build & push Docker image workflow then run on ecs
     │
     └── terraform/              # All Terraform code
         ├── main.tf
         ├── variables.tf
-        ├── terraform.tfvars
-        ├── user_data.tpl       # EC2 startup script (install Docker + run Strapi)
+        ├── outputs.tf  
 
 What Is the Task Concept?
 
