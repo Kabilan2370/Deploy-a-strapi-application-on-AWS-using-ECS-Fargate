@@ -69,7 +69,7 @@ resource "aws_security_group" "strapi_sg" {
 }
 
 resource "aws_cloudwatch_log_group" "strapi" {
-  name              = "/ecs/docker-strapi"
+  name              = "/ecs/docker-strapi-con"
   retention_in_days = 7
 }
 
