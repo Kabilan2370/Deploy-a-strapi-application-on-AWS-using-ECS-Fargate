@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "sub_strapi" {
-  name       = "strapi-db-subnet"
+  name       = "strapi-db-docker-subnet"
   subnet_ids = data.aws_subnets.default.ids
 }
 
