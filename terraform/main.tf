@@ -68,6 +68,10 @@ resource "aws_security_group" "strapi_sg" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "strapi" {
+  name              = "/ecs/strapi"
+  retention_in_days = 7
+}
 
 resource "aws_ecs_task_definition" "strapi" {
   family                   		= "docker-strapi-task"
@@ -82,6 +86,15 @@ resource "aws_ecs_task_definition" "strapi" {
     name      = "docker-strapi"
     image     = var.image_uri
     essential = true
+
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        "awslogs-group"         = "/ecs/strapi"
+        "awslogs-region"        = "eu-north-1"
+        "awslogs-stream-prefix" = "ecs"
+      }
+    }
 
     portMappings = [
       { containerPort = 1337 }
