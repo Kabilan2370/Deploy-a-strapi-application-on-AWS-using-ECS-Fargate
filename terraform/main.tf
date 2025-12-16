@@ -42,21 +42,32 @@ resource "aws_iam_role_policy_attachment" "ecs_exec_policy" {
 }
 
 # Security Group
-data "aws_security_groups" "strapi_sg" {
-  filter {
-    name   = "vpc-id"
-    values = [local.default_vpc_id]
+resource "aws_security_group" "strapi_sg" {
+  name   = "strapi-sg"
+  vpc_id = local.default_vpc_id
+
+  ingress {
+    from_port   = 1337
+    to_port     = 1337
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  filter {
-    name   = "group-name"
-    values = ["default"]
+  ingress {
+    from_port = 5432
+    to_port   = 5432
+    protocol  = "tcp"
+    self      = true
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_cloudwatch_log_group" "strapi" {
-  name              = "/ecs/strapi"
-  retention_in_days = 7
-}
+
 
 resource "aws_ecs_task_definition" "strapi" {
   family                   		= "docker-strapi-task"
@@ -86,10 +97,10 @@ resource "aws_ecs_task_definition" "strapi" {
       { name = "DATABASE_USERNAME", value = "strapi" },
       { name = "DATABASE_PASSWORD", value = "StrapiPassword123!" },
 
-      { name = "APP_KEYS", value = "key1,key2,key3,key4" },
-      { name = "API_TOKEN_SALT", value = "randomTokenSalt" },
-      { name = "ADMIN_JWT_SECRET", value = "adminJwtSecret" },
-      { name = "JWT_SECRET", value = "jwtSecret" }
+      { name = "APP_KEYS", value = "r9pQ7fC0y6nYvP1H0M8z2KZ+FZt9JqYpR8aM1s3EwQ4=,m3L2V7N+Kx0T9fQWJ5p8E4rZPZCq+S6A1yH0MdnYv8=,FZ+P9Jq3sM0yQ7r8aK6L1Tz4VnH2E5CwWmRZx=,xZ9E1r2V7p8C6Wq0mM5QJH3N4Y+LZsAFTk=" },
+      { name = "API_TOKEN_SALT", value = "S8Z3xH0QJ7r2p9C6yF5M+K4TnE1A=" },
+      { name = "ADMIN_JWT_SECRET", value = "Z1x8K9yH3pQF7J0+E2C4rV6mN5A=" },
+      { name = "JWT_SECRET", value = "H5N6M8JZ9QF0y+K7pE3x1rC4V2A=" }
     ]
 
     logConfiguration = {
@@ -113,8 +124,8 @@ resource "aws_ecs_service" "strapi" {
   launch_type     	= "FARGATE"
 
   network_configuration {
-    subnets                 = data.aws_subnets.default.ids
-    security_groups        = data.aws_security_groups.strapi_sg.ids
+    subnets                  = data.aws_subnets.default.ids
+    security_groups          = aws_security_groups.strapi_sg.ids
     assign_public_ip = true
   }
 }
