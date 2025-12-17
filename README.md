@@ -22,6 +22,7 @@
         ├── main.tf
         ├── variables.tf
         ├── outputs.tf  
+        ├── provider.tf
 
 What Is the Task Concept?
 
