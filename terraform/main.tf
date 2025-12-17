@@ -69,7 +69,7 @@ resource "aws_security_group" "strapi_sg" {
 }
 
 resource "aws_cloudwatch_log_group" "strapi" {
-  name              = "/ecs/docker-strapi-con"
+  name              = "/ecs/docker-con-strapi"
   retention_in_days = 7
 }
 
@@ -90,7 +90,7 @@ resource "aws_ecs_task_definition" "strapi" {
     logConfiguration = {
       logDriver = "awslogs"
       options = {
-        "awslogs-group"         = "/ecs/docker-strapi"
+        "awslogs-group"         = "/ecs/docker-con-strapi"
         "awslogs-region"        = "eu-north-1"
         "awslogs-stream-prefix" = "ecs"
       }
